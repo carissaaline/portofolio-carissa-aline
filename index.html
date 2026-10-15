@@ -215,7 +215,7 @@
   /* ---------- Projects (clickable -> detail modal) ---------- */
   .project-card{ cursor:pointer; }
   .media-slot{ width:100%; height:180px; background:var(--bg-alt); border-radius:var(--radius-md); overflow:hidden; margin-bottom:16px; position:relative; }
-  .media-slot img{ width:100%; height:100%; object-fit:cover; transition:transform .5s ease; }
+  .media-slot img{ width:100%; height:100%; object-fit:cover; object-position:top; transition:transform .5s ease; }
   .project-card:hover .media-slot img{ transform:scale(1.08); }
   .project-card h3{ font-size:1.06rem; margin-bottom:6px; font-family:'Fraunces',serif; font-weight:600; }
   .project-card p{ font-size:.85rem; color:var(--muted); margin-bottom:12px; }
@@ -226,42 +226,74 @@
   }
   .project-card:hover .project-hint{ opacity:1; transform:translateY(0); }
 
-  /* ---------- Certificates: table-style rows + modal ---------- */
+  /* proyek unggulan: lebar penuh, gambar di kiri */
+  .project-card.featured{
+    grid-column:1 / -1; display:grid; grid-template-columns:1.15fr 1fr; gap:30px; align-items:center;
+  }
+  .project-card.featured .media-slot{ height:280px; margin-bottom:0; }
+  .project-card.featured h3{ font-size:1.45rem; }
+  .project-card.featured p{ font-size:.92rem; }
+  .project-card.featured.reverse{ grid-template-columns:1fr 1.15fr; }
+  .project-card.featured.reverse .media-slot{ order:2; }
+  .project-new{
+    display:inline-block; font-family:'Caveat',cursive; font-weight:700; font-size:1.15rem;
+    color:var(--primary-dark); background:var(--gold-soft); padding:2px 14px; border-radius:50px;
+    transform:rotate(-3deg); margin-bottom:10px;
+  }
+
+  /* ---------- Certificates ---------- */
   .certs-section{ background:var(--bg-alt); border-radius:60px; margin:0 12px; }
   .cert-tabs{ display:flex; justify-content:center; gap:10px; margin-bottom:34px; flex-wrap:wrap; }
   .tab-btn{
     background:#fff; border:1px solid var(--border); padding:9px 20px; border-radius:50px;
     font-family:inherit; font-size:.86rem; font-weight:700; color:var(--muted); cursor:pointer; transition: all .25s ease;
   }
+  .tab-btn .count{ font-weight:600; opacity:.7; margin-left:2px; }
   .tab-btn.active, .tab-btn:hover{ background:var(--primary); color:#fff; border-color:var(--primary); }
 
   .cert-table{ background:#fff; border:1px solid var(--border); border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow); }
+
+  /* label pemisah antar kelompok sertifikat */
+  .cert-group-label{
+    display:flex; align-items:center; gap:12px;
+    padding:16px 28px 8px; font-family:'Caveat',cursive; font-weight:700; font-size:1.2rem; color:var(--primary-dark);
+  }
+  .cert-group-label::after{ content:''; flex:1; border-top:1.5px dashed var(--border); }
+  .cert-group-label.hide{ display:none; }
+
   .cert-row{
     display:flex; align-items:center; justify-content:space-between; gap:18px;
-    padding:20px 28px; border-bottom:1px solid var(--border); cursor:pointer;
+    padding:18px 28px; border-bottom:1px solid var(--border); cursor:pointer;
     transition: background .25s ease, transform .2s ease, opacity .3s ease;
   }
-  .cert-row:last-child{ border-bottom:none; }
+  .cert-row.last-in-group{ border-bottom:none; }
   .cert-row:hover{ background:var(--bg-alt); transform:translateX(6px); }
-  .cert-row.hide{ display:none !important; opacity:0; transform:scale(.97); pointer-events:none; }
+  .cert-row.hide{ display:none !important; }
   .cert-row-left{ display:flex; align-items:center; gap:16px; min-width:0; }
 
-  /* Brand-style icon marks (simplified, not literal logos) */
   .cert-icon{
     width:46px; height:46px; flex-shrink:0; display:flex; align-items:center; justify-content:center;
     font-family:'Fraunces',serif; font-weight:700; font-size:.95rem; letter-spacing:-.5px;
   }
-  .icon-hackerrank{
-    background:#0D2818; color:#39D353; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-  }
+  .icon-hackerrank{ background:#0D2818; color:#39D353; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); }
   .icon-efset{ background:linear-gradient(135deg,#0057B8,#00AEEF); color:#fff; border-radius:50%; font-size:.72rem; }
   .icon-skilvul{ background:var(--sage); color:#fff; border-radius:12px; }
+  .icon-bnsp{ background:var(--gold); color:#fff; border-radius:50%; font-size:.8rem; box-shadow:0 0 0 4px var(--gold-soft); }
+  .icon-itspec{ background:linear-gradient(135deg,#1B4F72,#2E86AB); color:#fff; border-radius:50%; font-size:.78rem; box-shadow:0 0 0 4px #D6EAF2; }
+  .icon-workshop{ background:var(--primary-soft); color:var(--primary-dark); border-radius:14px; font-size:.8rem; transform:rotate(-6deg); }
 
   .cert-row-left .cert-text{ min-width:0; }
   .cert-platform-pill{
     font-size:.66rem; font-weight:800; text-transform:uppercase; letter-spacing:.5px;
     color:#fff; background:var(--gold); padding:3px 10px; border-radius:50px; display:inline-block; margin-bottom:6px;
   }
+  .pill-hackerrank{ background:#1F6F3D; }
+  .pill-bnsp{ background:var(--gold); }
+  .pill-skilvul{ background:var(--sage); }
+  .pill-workshop{ background:var(--primary-dark); }
+  .pill-efset{ background:#0A74C9; }
+  .pill-itspec{ background:#1B4F72; }
+
   .cert-row-left h3{ font-family:'Fraunces',serif; font-weight:600; font-size:1rem; }
   .cert-row-left p{ font-size:.8rem; color:var(--muted); margin-top:2px; }
   .cert-view{ display:inline-flex; align-items:center; gap:6px; font-size:.85rem; font-weight:700; color:var(--primary-dark); white-space:nowrap; flex-shrink:0; }
@@ -289,7 +321,6 @@
   }
   .modal-close:hover{ background:var(--primary); color:#fff; transform:rotate(90deg); }
 
-  /* Framed image area: photo keeps its own aspect ratio, never cropped */
   .modal-img-frame{
     width:100%; background:
       repeating-linear-gradient(45deg, var(--bg-alt) 0 10px, #fdf3ec 10px 20px);
@@ -330,6 +361,10 @@
   /* ---------- Responsive ---------- */
   @media (max-width:768px){
     .hero-grid, .about-content, .grid-2, .grid-4{ grid-template-columns:1fr; }
+    .project-card.featured, .project-card.featured.reverse{ grid-template-columns:1fr; gap:16px; }
+    .project-card.featured.reverse .media-slot{ order:0; }
+    .project-card.featured .media-slot{ height:200px; }
+    .project-card.featured h3{ font-size:1.15rem; }
     .hero{ padding-top:118px; text-align:center; }
     .hero p{ margin:0 auto 24px auto; }
     .hero-btns{ justify-content:center; }
@@ -341,7 +376,8 @@
     .nav-indicator{ display:none; }
     .hamburger{ display:block; }
     .services-section, .certs-section{ border-radius:32px; }
-    .cert-row{ flex-wrap:wrap; }
+    .cert-row{ flex-wrap:wrap; padding:16px 20px; }
+    .cert-group-label{ padding:14px 20px 6px; }
     .cert-view{ margin-left:62px; }
   }
 
@@ -478,7 +514,7 @@
     </div>
   </section>
 
-  <!-- Projects: klik untuk detail lengkap -->
+  <!-- Projects -->
   <section id="projects">
     <div class="container">
       <div class="section-header reveal">
@@ -488,7 +524,43 @@
       </div>
       <div class="grid-2 reveal-stagger reveal">
 
-        <div class="card project-card tilt" style="--i:0;"
+        <!-- Proyek unggulan (terbaru) -->
+        <div class="card project-card featured tilt"
+             data-img="moneyflow.jpeg" data-title="MoneyFlow — Pencatat Keuangan Pribadi"
+             data-desc="MoneyFlow adalah aplikasi web pencatat keuangan pribadi yang dibuat supaya mengatur uang terasa ringan, bukan beban. Pengguna bisa mencatat setiap pemasukan dan pengeluaran, membagi budget bulanan per kategori seperti makan, transport, dan belanja, lalu melihat ke mana uangnya pergi lewat grafik yang mudah dibaca. Maskot Piggy hadir memberi pengingat kecil saat pengeluaran mulai mendekati batas budget, sehingga kebiasaan menabung jadi lebih menyenangkan."
+             data-tech="Next.js,Tailwind CSS,TypeScript"
+             data-features="Pencatatan pemasukan & pengeluaran harian|Budget bulanan per kategori dengan progress bar|Grafik pengeluaran mingguan & bulanan|Ringkasan total saldo secara otomatis|Target tabungan dengan indikator progres|Pengingat dari maskot Piggy saat budget menipis|Login & registrasi akun pengguna">
+          <div class="media-slot">
+            <img src="moneyflow.jpeg" alt="MoneyFlow">
+            <span class="project-hint">Klik untuk detail ✦</span>
+          </div>
+          <div>
+            <span class="project-new">proyek terbaru ✦</span>
+            <h3>MoneyFlow — Pencatat Keuangan Pribadi</h3>
+            <p>Aplikasi pencatat keuangan pribadi untuk mencatat pemasukan dan pengeluaran, mengatur budget per kategori, dan memantau tabungan lewat grafik yang mudah dibaca. Ada maskot Piggy yang ngingetin kalau budget mulai menipis.</p>
+            <div class="tech-grid"><span class="tech-tag">Next.js</span><span class="tech-tag">Tailwind CSS</span><span class="tech-tag">TypeScript</span></div>
+          </div>
+        </div>
+
+        <!-- Proyek UKK — cek lagi tech stack-nya -->
+        <div class="card project-card featured reverse tilt"
+             data-img="projekukk.jpeg" data-title="Eco Waste — Bank Sampah Digital"
+             data-desc="Proyek Uji Kompetensi Keahlian (UKK): aplikasi bank sampah digital yang mengubah sampah daur ulang jadi poin dan hadiah. Nasabah menyetorkan sampah, petugas menimbang ulang beratnya supaya data tetap akurat, lalu poin dihitung otomatis berdasarkan kategori sampah. Poin yang terkumpul bisa ditukar dengan voucher atau barang menarik, sehingga warga punya alasan nyata untuk memilah dan mendaur ulang sampahnya."
+             data-tech="Next.js,NestJS,MySQL"
+             data-features="Dua peran pengguna: Nasabah & Admin/Petugas|Pencatatan setoran sampah dengan penimbangan ulang oleh petugas|Poin dihitung otomatis sesuai kategori sampah|Penukaran poin dengan voucher & barang|Riwayat setoran dan saldo poin nasabah|Autentikasi Sign Up & Sign In">
+          <div class="media-slot">
+            <img src="projekukk.jpeg" alt="Eco Waste — Bank Sampah Digital">
+            <span class="project-hint">Klik untuk detail ✦</span>
+          </div>
+          <div>
+            <span class="project-new">proyek UKK ✦</span>
+            <h3>Eco Waste — Bank Sampah Digital</h3>
+            <p>Aplikasi bank sampah yang mengubah setoran sampah daur ulang jadi poin otomatis, lalu bisa ditukar dengan voucher dan hadiah. Ada dua peran, yaitu nasabah dan admin/petugas yang menimbang ulang setiap setoran.</p>
+            <div class="tech-grid"><span class="tech-tag">Next.js</span><span class="tech-tag">NestJS</span><span class="tech-tag">MySQL</span></div>
+          </div>
+        </div>
+
+        <div class="card project-card tilt"
              data-img="wisuda.png" data-title="Undangan Wisuda Digital SMK Telkom Malang"
              data-desc="Website undangan wisuda interaktif dengan fitur rundown acara, hitung mundur, dan buku tamu digital."
              data-tech="Next.js,Tailwind CSS"
@@ -502,7 +574,7 @@
           <div class="tech-grid"><span class="tech-tag">Next.js</span><span class="tech-tag">Tailwind CSS</span></div>
         </div>
 
-        <div class="card project-card tilt" style="--i:1;"
+        <div class="card project-card tilt"
              data-img="kai.png" data-title="Online Train Ticket Reservation"
              data-desc="Sistem pemesanan tiket kereta online lengkap dengan dashboard manajemen admin dan pemilihan kursi."
              data-tech="Next.js,NestJS,MySQL"
@@ -516,7 +588,7 @@
           <div class="tech-grid"><span class="tech-tag">Next.js</span><span class="tech-tag">NestJS</span><span class="tech-tag">MySQL</span></div>
         </div>
 
-        <div class="card project-card tilt" style="--i:2;"
+        <div class="card project-card tilt"
              data-img="pdam.png" data-title="PDAM Digital System"
              data-desc="Sistem manajemen pelanggan, pencatatan tagihan air, serta verifikasi bukti pembayaran secara online."
              data-tech="Next.js,NestJS,MySQL"
@@ -530,7 +602,7 @@
           <div class="tech-grid"><span class="tech-tag">Next.js</span><span class="tech-tag">NestJS</span><span class="tech-tag">MySQL</span></div>
         </div>
 
-        <div class="card project-card tilt" style="--i:3;"
+        <div class="card project-card tilt"
              data-img="stockbarang.png" data-title="Inventory Management System"
              data-desc="Aplikasi web untuk mengelola stok barang toko secara real-time disertai grafik inventaris."
              data-tech="Next.js,Tailwind CSS"
@@ -548,7 +620,7 @@
     </div>
   </section>
 
-  <!-- Certificates: table + click-to-reveal modal -->
+  <!-- Certificates -->
   <section id="certificates" class="certs-section">
     <div class="container">
       <div class="section-header reveal">
@@ -557,22 +629,29 @@
         <p>Pencapaian resmi yang telah didapatkan — klik baris untuk lihat sertifikatnya</p>
       </div>
 
+      <!-- jumlah di tiap tab dihitung otomatis lewat JS -->
       <div class="cert-tabs reveal">
-        <button class="tab-btn active" data-filter="all">Semua (8)</button>
-<button class="tab-btn" data-filter="hackerrank">HackerRank (4)</button>
-<button class="tab-btn" data-filter="others">Lainnya (4)</button>
+        <button class="tab-btn active" data-filter="all">Semua <span class="count"></span></button>
+        <button class="tab-btn" data-filter="kompetensi">Kompetensi <span class="count"></span></button>
+        <button class="tab-btn" data-filter="hackerrank">HackerRank <span class="count"></span></button>
+        <button class="tab-btn" data-filter="kursus">Kursus & Workshop <span class="count"></span></button>
+        <button class="tab-btn" data-filter="bahasa">Bahasa <span class="count"></span></button>
       </div>
 
-      <div class="cert-table reveal-stagger reveal" id="certTable">
-        <div class="cert-row cert-item hackerrank" style="--i:0;"
-             data-img="node.png" data-badge="HackerRank" data-title="Node.js (Intermediate)"
-             data-desc="Sertifikat validasi keahlian backend async I/O, event loop, dan modul Node.js.">
+      <div class="cert-table reveal" id="certTable">
+
+        <!-- ===== Kompetensi ===== -->
+        <div class="cert-group-label" data-group="kompetensi">sertifikasi kompetensi</div>
+
+        <div class="cert-row kompetensi"
+             data-img="fullstack.png" data-badge="BNSP" data-title="Junior Fullstack Web Developer Competency"
+             data-desc="Sertifikat kompetensi yang menyatakan kemampuan dalam pengembangan aplikasi web menggunakan teknologi Frontend dan Backend sesuai standar kompetensi.">
           <div class="cert-row-left">
-            <span class="cert-icon icon-hackerrank">H</span>
+            <span class="cert-icon icon-bnsp">FS</span>
             <div class="cert-text">
-              <span class="cert-platform-pill">HackerRank</span>
-              <h3>Node.js (Intermediate)</h3>
-              <p>Backend async I/O & event loop</p>
+              <span class="cert-platform-pill pill-bnsp">BNSP</span>
+              <h3>Junior Fullstack Web Developer Competency</h3>
+              <p>Uji kompetensi di SMK Telkom Malang · Frontend, Backend, Database</p>
             </div>
           </div>
           <span class="cert-view">Lihat sertifikat
@@ -580,13 +659,32 @@
           </span>
         </div>
 
-        <div class="cert-row cert-item hackerrank" style="--i:1;"
+        <div class="cert-row kompetensi"
+             data-img="serkom.jpeg" data-badge="IT Specialist" data-title="IT Specialist — Artificial Intelligence"
+             data-desc="Sertifikasi internasional Information Technology Specialist bidang Artificial Intelligence dari Certiport (Pearson) bersama CertNexus. Menguji pemahaman konsep dasar AI, machine learning, penggunaan AI yang bertanggung jawab, serta penerapannya. Diterima pada 24 September 2026 dan berlaku 5 tahun.">
+          <div class="cert-row-left">
+            <span class="cert-icon icon-itspec">AI</span>
+            <div class="cert-text">
+              <span class="cert-platform-pill pill-itspec">IT Specialist</span>
+              <h3>IT Specialist — Artificial Intelligence</h3>
+              <p>Certiport · Pearson · CertNexus · Sep 2026</p>
+            </div>
+          </div>
+          <span class="cert-view">Lihat sertifikat
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+          </span>
+        </div>
+
+        <!-- ===== HackerRank ===== -->
+        <div class="cert-group-label" data-group="hackerrank">hackerrank</div>
+
+        <div class="cert-row hackerrank"
              data-img="sql.png" data-badge="HackerRank" data-title="SQL (Advanced)"
              data-desc="Sertifikat kemampuan query kompleks, pemrosesan data, JOIN, dan optimasi database.">
           <div class="cert-row-left">
             <span class="cert-icon icon-hackerrank">H</span>
             <div class="cert-text">
-              <span class="cert-platform-pill">HackerRank</span>
+              <span class="cert-platform-pill pill-hackerrank">HackerRank</span>
               <h3>SQL (Advanced)</h3>
               <p>Query kompleks & optimasi database</p>
             </div>
@@ -596,15 +694,15 @@
           </span>
         </div>
 
-        <div class="cert-row cert-item hackerrank" style="--i:2;"
-             data-img="problem.png" data-badge="HackerRank" data-title="Problem Solving (Basic)"
-             data-desc="Sertifikat logika pemrograman dasar, struktur data, dan pemecahan algoritma.">
+        <div class="cert-row hackerrank"
+             data-img="node.png" data-badge="HackerRank" data-title="Node.js (Intermediate)"
+             data-desc="Sertifikat validasi keahlian backend async I/O, event loop, dan modul Node.js.">
           <div class="cert-row-left">
             <span class="cert-icon icon-hackerrank">H</span>
             <div class="cert-text">
-              <span class="cert-platform-pill">HackerRank</span>
-              <h3>Problem Solving (Basic)</h3>
-              <p>Logika dasar & struktur data</p>
+              <span class="cert-platform-pill pill-hackerrank">HackerRank</span>
+              <h3>Node.js (Intermediate)</h3>
+              <p>Backend async I/O & event loop</p>
             </div>
           </div>
           <span class="cert-view">Lihat sertifikat
@@ -612,13 +710,14 @@
           </span>
         </div>
 
-        <div class="cert-row cert-item hackerrank" style="--i:3;"
+        <!-- cek: gambar sertifikat JavaScript sebelumnya pakai css.png -->
+        <div class="cert-row hackerrank"
              data-img="css.png" data-badge="HackerRank" data-title="JavaScript (Basic)"
              data-desc="Sertifikat pemahaman sintaksis dasar, fungsi, objek, dan logika JS murni.">
           <div class="cert-row-left">
             <span class="cert-icon icon-hackerrank">H</span>
             <div class="cert-text">
-              <span class="cert-platform-pill">HackerRank</span>
+              <span class="cert-platform-pill pill-hackerrank">HackerRank</span>
               <h3>JavaScript (Basic)</h3>
               <p>Sintaksis dasar, fungsi & objek</p>
             </div>
@@ -628,13 +727,32 @@
           </span>
         </div>
 
-        <div class="cert-row cert-item others" style="--i:4;"
+        <div class="cert-row hackerrank"
+             data-img="problem.png" data-badge="HackerRank" data-title="Problem Solving (Basic)"
+             data-desc="Sertifikat logika pemrograman dasar, struktur data, dan pemecahan algoritma.">
+          <div class="cert-row-left">
+            <span class="cert-icon icon-hackerrank">H</span>
+            <div class="cert-text">
+              <span class="cert-platform-pill pill-hackerrank">HackerRank</span>
+              <h3>Problem Solving (Basic)</h3>
+              <p>Logika dasar & struktur data</p>
+            </div>
+          </div>
+          <span class="cert-view">Lihat sertifikat
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+          </span>
+        </div>
+
+        <!-- ===== Kursus & Workshop ===== -->
+        <div class="cert-group-label" data-group="kursus">kursus & workshop</div>
+
+        <div class="cert-row kursus"
              data-img="skillvul.png" data-badge="Skilvul" data-title="TypeScript Dasar"
              data-desc="Sertifikat penyelesaian materi dasar TypeScript dan pemrograman berorientasi objek (OOP).">
           <div class="cert-row-left">
             <span class="cert-icon icon-skilvul">S</span>
             <div class="cert-text">
-              <span class="cert-platform-pill" style="background:var(--sage);">Skilvul</span>
+              <span class="cert-platform-pill pill-skilvul">Skilvul</span>
               <h3>TypeScript Dasar</h3>
               <p>TypeScript & OOP</p>
             </div>
@@ -644,13 +762,32 @@
           </span>
         </div>
 
-        <div class="cert-row cert-item others" style="--i:5;"
+        <div class="cert-row kursus"
+             data-img="hosting.png" data-badge="Workshop" data-title="Workshop Hosting untuk Pemula"
+             data-desc="Sertifikat workshop mengenai dasar hosting website, deployment aplikasi web, domain, serta pengenalan layanan cloud hosting.">
+          <div class="cert-row-left">
+            <span class="cert-icon icon-workshop">WH</span>
+            <div class="cert-text">
+              <span class="cert-platform-pill pill-workshop">Workshop</span>
+              <h3>Workshop Hosting untuk Pemula</h3>
+              <p>Deployment, hosting & domain</p>
+            </div>
+          </div>
+          <span class="cert-view">Lihat sertifikat
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+          </span>
+        </div>
+
+        <!-- ===== Bahasa ===== -->
+        <div class="cert-group-label" data-group="bahasa">bahasa</div>
+
+        <div class="cert-row bahasa"
              data-img="ef.png" data-badge="EF SET" data-title="English Certificate"
              data-desc="Sertifikat kemampuan bahasa Inggris dengan skor 58/100 (B2 Upper Intermediate).">
           <div class="cert-row-left">
             <span class="cert-icon icon-efset">EF</span>
             <div class="cert-text">
-              <span class="cert-platform-pill" style="background:var(--primary);">EF SET</span>
+              <span class="cert-platform-pill pill-efset">EF SET</span>
               <h3>English Certificate</h3>
               <p>Skor 58/100 · B2 Upper Intermediate</p>
             </div>
@@ -659,49 +796,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
           </span>
         </div>
-        <div class="cert-row cert-item others" style="--i:6;"
-     data-img="fullstack.png"
-     data-badge="BNSP"
-     data-title="Junior Fullstack Web Developer Competency"
-     data-desc="Sertifikat kompetensi yang menyatakan kemampuan dalam pengembangan aplikasi web menggunakan teknologi Frontend dan Backend sesuai standar kompetensi.">
-  <div class="cert-row-left">
-    <span class="cert-icon icon-skilvul">FS</span>
-    <div class="cert-text">
-      <span class="cert-platform-pill" style="background:var(--sage);">SMK TELKOM MALANG</span>
-      <h3>Junior Fullstack Web Developer Competency</h3>
-      <p>Frontend • Backend • Database</p>
-    </div>
-  </div>
 
-  <span class="cert-view">
-    Lihat sertifikat
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
-      <path d="M9 6l6 6-6 6"/>
-    </svg>
-  </span>
-</div>
-
-<div class="cert-row cert-item others" style="--i:7;"
-     data-img="hosting.png"
-     data-badge="Workshop"
-     data-title="Workshop Hosting untuk Pemula"
-     data-desc="Sertifikat workshop mengenai dasar hosting website, deployment aplikasi web, domain, serta pengenalan layanan cloud hosting.">
-  <div class="cert-row-left">
-    <span class="cert-icon icon-efset">WH</span>
-    <div class="cert-text">
-      <span class="cert-platform-pill" style="background:var(--primary);">Workshop</span>
-      <h3>Workshop Hosting untuk Pemula</h3>
-      <p>Deployment • Hosting • Domain</p>
-    </div>
-  </div>
-
-  <span class="cert-view">
-    Lihat sertifikat
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
-      <path d="M9 6l6 6-6 6"/>
-    </svg>
-  </span>
-</div>
       </div>
     </div>
   </section>
@@ -808,20 +903,45 @@
   }, { threshold:.12 });
   document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
 
-  /* ---------- Certificate filter ---------- */
+  /* ---------- Certificate filter (jumlah otomatis + label kelompok) ---------- */
   const tabBtns = document.querySelectorAll('.tab-btn');
-  const certRows = document.querySelectorAll('.cert-row');
+  const certRows = Array.from(document.querySelectorAll('.cert-row'));
+  const groupLabels = document.querySelectorAll('.cert-group-label');
+
+  tabBtns.forEach(btn=>{
+    const f = btn.dataset.filter;
+    const n = f === 'all' ? certRows.length : certRows.filter(r=>r.classList.contains(f)).length;
+    btn.querySelector('.count').textContent = '(' + n + ')';
+  });
+
+  function markLastInGroups(){
+    certRows.forEach(r=>r.classList.remove('last-in-group'));
+    const visible = certRows.filter(r=>!r.classList.contains('hide'));
+    visible.forEach((r,i)=>{
+      const next = r.nextElementSibling;
+      if(i === visible.length - 1 || (next && next.classList.contains('cert-group-label') && !next.classList.contains('hide'))){
+        r.classList.add('last-in-group');
+      }
+    });
+  }
+
+  function applyFilter(filter){
+    certRows.forEach(row=>{
+      row.classList.toggle('hide', !(filter==='all' || row.classList.contains(filter)));
+    });
+    // label kelompok hanya tampil di tab "Semua"
+    groupLabels.forEach(label=> label.classList.toggle('hide', filter !== 'all'));
+    markLastInGroups();
+  }
+
   tabBtns.forEach(btn=>{
     btn.addEventListener('click', ()=>{
       tabBtns.forEach(b=>b.classList.remove('active'));
       btn.classList.add('active');
-      const filter = btn.dataset.filter;
-      certRows.forEach(row=>{
-        const show = filter==='all' || row.classList.contains(filter);
-        row.classList.toggle('hide', !show);
-      });
+      applyFilter(btn.dataset.filter);
     });
   });
+  applyFilter('all');
 
   /* ---------- Generic modal open/close helpers ---------- */
   function wireModal(overlayId, closeId){
@@ -849,7 +969,7 @@
       certModalImg.src = row.dataset.img;
       certModalImg.alt = row.dataset.title;
       certModalBadge.textContent = row.dataset.badge;
-      certModalBadge.style.background = row.querySelector('.cert-platform-pill').style.background || '';
+      certModalBadge.style.background = getComputedStyle(row.querySelector('.cert-platform-pill')).backgroundColor;
       certModalTitle.textContent = row.dataset.title;
       certModalDesc.textContent = row.dataset.desc;
       openModal(certModal.overlay);
@@ -882,7 +1002,7 @@
     card.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(); } });
   });
 
-  if(reduceMotion) return; // stop here for reduced-motion users
+  if(reduceMotion) return;
 
   /* ---------- Custom cursor ---------- */
   if(!isTouch){
@@ -938,16 +1058,17 @@
       });
     });
 
-    /* ---------- Tilt cards ---------- */
+    /* ---------- Tilt cards (lebih halus untuk kartu lebar) ---------- */
     document.querySelectorAll('.tilt').forEach(el=>{
+      const strength = el.classList.contains('featured') ? 3 : 8;
       el.addEventListener('mousemove', e=>{
         const r = el.getBoundingClientRect();
         const px = (e.clientX - r.left)/r.width - .5;
         const py = (e.clientY - r.top)/r.height - .5;
-        el.style.transform = `perspective(700px) rotateX(${(-py*8).toFixed(2)}deg) rotateY(${(px*8).toFixed(2)}deg) scale(1.02)`;
+        el.style.transform = `perspective(900px) rotateX(${(-py*strength).toFixed(2)}deg) rotateY(${(px*strength).toFixed(2)}deg) scale(1.01)`;
       });
       el.addEventListener('mouseleave', ()=>{
-        el.style.transform = 'perspective(700px) rotateX(0) rotateY(0) scale(1)';
+        el.style.transform = 'perspective(900px) rotateX(0) rotateY(0) scale(1)';
       });
     });
 
